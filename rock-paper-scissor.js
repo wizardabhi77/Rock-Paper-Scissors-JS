@@ -1,22 +1,18 @@
 
 
+
 function getComputerChoice(){
     let choice = ['rock', 'paper', 'scissors'];
     return choice[Math.floor(Math.random() * 3)];
 }
 
-function getHumanChoice(){
-    const userInput = window.prompt('Enter Your Choice:','Rock, Paper, Scissors');
+function getHumanChoice(value){
+    const userInput = value;
     return userInput;
 }
 
-
-
-function playGame(){
-    let humanScore = 0;
-    let computerScore = 0;
-
-    function playRound(humanChoice, computerChoice){
+function playRound(humanChoice, computerChoice){
+    
     if(humanChoice.toLowerCase() === 'rock' && computerChoice === 'scissors' || 
         humanChoice.toLowerCase() === 'paper' && computerChoice === 'rock' ||
         humanChoice.toLowerCase() === 'scissors' && computerChoice === 'paper'){
@@ -31,22 +27,36 @@ function playGame(){
             return `You Lose!,${computerChoice} beats ${humanChoice.toLowerCase()}`;
         }
      
-    }
+}
 
-    let round = 0;
+function playGame(e) {
 
-    while(round < 5){
-        let result = playRound(getHumanChoice(), getComputerChoice());
-        console.log(result, `\n Your Score: ${humanScore} \n Opponet Score: ${computerScore}`);
-        round++;
-    }
+    let value = e.target.value;
+    results.appendChild(para);
+    let result = playRound(getHumanChoice(value), getComputerChoice());
+    para.textContent= result + `|| Your Score: ${humanScore} || Opponet Score: ${computerScore}`;
+    round++;
 
-    if (humanScore > computerScore) {
-        return console.log('You WIN the GAME!');
+    if (humanScore >= 5) {
+        para.textContent ='You WIN the GAME! || RESTART';
+        humanScore= 0 ;
+        computerScore = 0;
     }
-    else {
-        return console.log('you LOSE the GAME!');
+    else if (computerScore >= 5) {
+        para.textContent='you LOSE the GAME! || RESTART';
+        humanScore= 0 ;
+        computerScore = 0;
     }
 }
 
-playGame();
+const button = document.querySelectorAll(".btn");
+const results = document.querySelector(".results");
+const para = document.createElement("p");
+
+let humanScore = 0;
+let computerScore = 0;
+
+let round = 0;
+
+button.forEach((btn) => { addEventListener("click", playGame); });
+    
